@@ -24,13 +24,15 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.cryptocurrencytracker.R
 import com.example.cryptocurrencytracker.domain.model.Cryptocurrency
 
 @Composable
@@ -70,14 +72,14 @@ fun CryptocurrencyHomeScreen(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Text(
-                        text = "Home Screen",
+                        text = stringResource(R.string.home_screen),
                         style = TextStyle(
                             fontSize = 20.sp,
                             fontFamily = FontFamily.SansSerif,
                             lineHeight = 22.sp
                         ),
                         fontWeight = FontWeight.Bold,
-                        color = Color.Black,
+                        color = MaterialTheme.colorScheme.onBackground,
                         textAlign = TextAlign.Center
                     )
 
@@ -113,7 +115,11 @@ private fun CryptocurrencyItem(
         modifier = Modifier
             .fillMaxWidth()
             .clickable(onClick = onClick)
-            .padding(horizontal = 16.dp, vertical = 12.dp)
+            .padding(
+                horizontal = dimensionResource(R.dimen.default_padding),
+                vertical = dimensionResource(R.dimen.half_default_padding)
+            )
+
     ) {
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -132,7 +138,7 @@ private fun CryptocurrencyItem(
                 fontWeight = FontWeight.SemiBold
             )
         }
-        Spacer(modifier = Modifier.height(4.dp))
+        Spacer(modifier = Modifier.height(dimensionResource(R.dimen.spacer_padding)))
         Text(
             text = "bid/ask: ${cryptocurrency.bidPrice}/${cryptocurrency.askPrice}",
             style = MaterialTheme.typography.bodySmall,

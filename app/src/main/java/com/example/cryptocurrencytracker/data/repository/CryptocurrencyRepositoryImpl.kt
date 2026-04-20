@@ -23,12 +23,13 @@ class CryptocurrencyRepositoryImpl @Inject constructor(
                 cryptocurrencyDao.getAll().map { it.toDomain() }
             }
         } catch (_: Exception) {
-            cryptocurrencyDao.getAll().map { it.toDomain() }
+            val cached = cryptocurrencyDao.getAll().map { it.toDomain() }
+            if(cached.isEmpty()) throw Exception("No internet connection")
+            cached
         }
     }
 
     override suspend fun getCryptocurrencyBySymbol(symbol: String): Cryptocurrency? {
         return cryptocurrencyDao.getBySymbol(symbol)?.toDomain()
     }
-
 }

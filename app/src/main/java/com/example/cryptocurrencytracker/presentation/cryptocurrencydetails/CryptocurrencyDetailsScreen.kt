@@ -20,14 +20,13 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.cryptocurrencytracker.R
@@ -63,34 +62,34 @@ fun CryptocurrencyDetailsHeader(
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(bottom = 8.dp)
+            .padding(bottom = dimensionResource(R.dimen.half_default_padding))
     ) {
         Icon(
             painter = painterResource(id = R.drawable.ic_arrow_back),
             modifier = Modifier
                 .align(Alignment.CenterStart)
-                .padding(start = 16.dp)
+                .padding(start = dimensionResource(R.dimen.default_padding))
                 .clickable(
                     enabled = true,
                     indication = null,
                     interactionSource = remember { MutableInteractionSource() },
                     onClick = onNavigateBack
                 ),
-            tint = Color.Black,
+            tint = MaterialTheme.colorScheme.onBackground,
             contentDescription = stringResource(id = R.string.back)
         )
 
         Text(
             modifier = Modifier
                 .align(Alignment.Center),
-            text = "Details for $symbol",
+            text = stringResource(R.string.details_for, symbol),
             style = TextStyle(
                 fontSize = 20.sp,
                 fontFamily = FontFamily.SansSerif,
                 lineHeight = 22.sp
             ),
             fontWeight = FontWeight.Bold,
-            color = Color.Black,
+            color = MaterialTheme.colorScheme.onBackground,
             textAlign = TextAlign.Center
         )
     }
@@ -105,7 +104,10 @@ fun CryptocurrencyDetailsList(
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 16.dp, vertical = 12.dp)
+                    .padding(
+                        horizontal = dimensionResource(R.dimen.default_padding),
+                        vertical = dimensionResource(R.dimen.half_default_padding)
+                    )
             ) {
                 Text(
                     text = item.label,
