@@ -11,17 +11,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 
 private val DarkColorScheme = darkColorScheme(
-    primary = Purple80,
-    secondary = PurpleGrey80,
-    tertiary = Pink80,
+    primary = White,
+    secondary = LightGray,
+    tertiary = Black,
     onBackground = White,
     onSurfaceVariant = Gray
 )
 
 private val LightColorScheme = lightColorScheme(
-    primary = Purple40,
-    secondary = PurpleGrey40,
-    tertiary = Pink40,
+    primary = Black,
+    secondary = LightGray,
+    tertiary = White,
     onBackground = Black,
     onSurfaceVariant = Gray
 )
@@ -30,7 +30,7 @@ private val LightColorScheme = lightColorScheme(
 fun CryptocurrencyTrackerTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     // Dynamic color is available on Android 12+
-    dynamicColor: Boolean = false,
+    dynamicColor: Boolean = true,
     content: @Composable () -> Unit
 ) {
     val colorScheme = when {
