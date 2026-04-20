@@ -1,7 +1,7 @@
 package com.example.cryptocurrencytracker.presentation.cryptocurrencydetails
 
-import com.example.cryptocurrencytracker.domain.model.Cryptocurrency
+import com.example.cryptocurrencytracker.presentation.cryptocurrencydetails.model.CryptocurrencyDetailsUi
 
 data class CryptocurrencyDetailsState(
-    val cryptocurrency: Cryptocurrency? = null
+    val cryptocurrencyDetailsUiItems: List<CryptocurrencyDetailsUi> = emptyList()
 )
