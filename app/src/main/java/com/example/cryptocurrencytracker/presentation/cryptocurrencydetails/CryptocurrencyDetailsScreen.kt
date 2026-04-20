@@ -8,6 +8,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -29,6 +31,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.cryptocurrencytracker.R
+import com.example.cryptocurrencytracker.presentation.cryptocurrencydetails.model.CryptocurrencyDetailsUi
 
 @Composable
 fun CryptocurrencyDetailsScreen(
@@ -38,74 +41,88 @@ fun CryptocurrencyDetailsScreen(
 ) {
     val state by viewModel.state.collectAsState()
 
-    Column(modifier = Modifier
-        .fillMaxSize()
-        .statusBarsPadding()
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .statusBarsPadding()
     ) {
-        Box(
+        CryptocurrencyDetailsHeader(
+            symbol = symbol,
+            onNavigateBack = onNavigateBack
+        )
+
+        CryptocurrencyDetailsList(cryptocurrencyDetailsUiList = state.cryptocurrencyDetailsUiItems)
+    }
+}
+
+@Composable
+fun CryptocurrencyDetailsHeader(
+    symbol: String,
+    onNavigateBack: () -> Unit
+) {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(bottom = 8.dp)
+    ) {
+        Icon(
+            painter = painterResource(id = R.drawable.ic_arrow_back),
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 8.dp)
-        ) {
-            Icon(
-                painter = painterResource(id = R.drawable.ic_arrow_back),
-                modifier = Modifier
-                    .align(Alignment.CenterStart)
-                    .padding(start = 16.dp)
-                    .clickable(
-                        enabled = true,
-                        indication = null,
-                        interactionSource = remember { MutableInteractionSource() },
-                        onClick = onNavigateBack
-                    ),
-                tint = Color.Black,
-                contentDescription = stringResource(id = R.string.back)
-            )
-
-            Text(
-                modifier = Modifier
-                    .align(Alignment.Center),
-                text = "Details for $symbol",
-                style = TextStyle(
-                    fontSize = 20.sp,
-                    fontFamily = FontFamily.SansSerif,
-                    lineHeight = 22.sp
+                .align(Alignment.CenterStart)
+                .padding(start = 16.dp)
+                .clickable(
+                    enabled = true,
+                    indication = null,
+                    interactionSource = remember { MutableInteractionSource() },
+                    onClick = onNavigateBack
                 ),
-                fontWeight = FontWeight.Bold,
-                color = Color.Black,
-                textAlign = TextAlign.Center
-            )
-        }
+            tint = Color.Black,
+            contentDescription = stringResource(id = R.string.back)
+        )
 
-        CryptocurrencyDetailsItem(label = "Symbol", value = state.cryptocurrency?.symbol ?: "")
-        CryptocurrencyDetailsItem(
-            label = "Price change",
-            value = state.cryptocurrency?.priceChange ?: ""
+        Text(
+            modifier = Modifier
+                .align(Alignment.Center),
+            text = "Details for $symbol",
+            style = TextStyle(
+                fontSize = 20.sp,
+                fontFamily = FontFamily.SansSerif,
+                lineHeight = 22.sp
+            ),
+            fontWeight = FontWeight.Bold,
+            color = Color.Black,
+            textAlign = TextAlign.Center
         )
     }
 }
 
 @Composable
-fun CryptocurrencyDetailsItem(
-    label: String,
-    value: String
+fun CryptocurrencyDetailsList(
+    cryptocurrencyDetailsUiList: List<CryptocurrencyDetailsUi>
 ) {
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 12.dp)
-    ) {
-        Text(
-            text = label,
-            style = MaterialTheme.typography.titleMedium,
-            fontWeight = FontWeight.Bold
-        )
+    LazyColumn {
+        itemsIndexed(cryptocurrencyDetailsUiList) { index, item ->
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp, vertical = 12.dp)
+            ) {
+                Text(
+                    text = item.label,
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.Bold
+                )
 
-        Text(
-            text = value,
-            style = MaterialTheme.typography.bodySmall,
-            color = MaterialTheme.colorScheme.onSurfaceVariant
-        )
+                Text(
+                    text = item.value,
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            }
+
+            if (index < cryptocurrencyDetailsUiList.lastIndex) {
+                HorizontalDivider()
+            }
+        }
     }
-    HorizontalDivider()
 }
