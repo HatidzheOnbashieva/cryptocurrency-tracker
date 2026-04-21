@@ -26,11 +26,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.cryptocurrencytracker.R
 import com.example.cryptocurrencytracker.domain.model.Cryptocurrency
@@ -59,7 +56,7 @@ fun CryptocurrencyHomeScreen(
                     Text(
                         text = state.error!!,
                         color = MaterialTheme.colorScheme.error,
-                        style = MaterialTheme.typography.bodyLarge
+                        style = MaterialTheme.typography.titleLarge
                     )
                 }
             }
@@ -73,12 +70,7 @@ fun CryptocurrencyHomeScreen(
                 ) {
                     Text(
                         text = stringResource(R.string.home_screen),
-                        style = TextStyle(
-                            fontSize = 20.sp,
-                            fontFamily = FontFamily.SansSerif,
-                            lineHeight = 22.sp
-                        ),
-                        fontWeight = FontWeight.Bold,
+                        style = MaterialTheme.typography.titleLarge,
                         color = MaterialTheme.colorScheme.onBackground,
                         textAlign = TextAlign.Center
                     )
